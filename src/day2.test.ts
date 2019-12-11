@@ -1,4 +1,4 @@
-import { input } from "./day2-input";
+import { input as memory } from "./day2-input";
 import { computer, executeProgram } from "./day2";
 
 describe("executeProgram", () => {
@@ -41,8 +41,8 @@ describe("executeProgram", () => {
   });
 });
 
-describe("computer", () => {
-  it("should return correct result in position 0", () => {
-    expect(computer(input)[0]).toBe(11590668);
+describe("computer / Day 2", () => {
+  it("should return correct result for given input", () => {
+    expect(computer(memory, 12, 2)).toBe(11590668);
   });
 });

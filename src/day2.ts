@@ -1,20 +1,18 @@
-import { input as data } from "./day2-input";
-
 let halt: boolean = false;
 
 export const executeProgram = (
   program: Array<number>,
-  finalResult: Array<number>
+  memory: Array<number>
 ): Array<number> => {
   const opcode: number = program[0];
   let value = 0;
 
   switch (opcode) {
     case 1:
-      value = finalResult[program[1]] + finalResult[program[2]];
+      value = memory[program[1]] + memory[program[2]];
       break;
     case 2:
-      value = finalResult[program[1]] * finalResult[program[2]];
+      value = memory[program[1]] * memory[program[2]];
       break;
     case 99:
       halt = true;
@@ -24,29 +22,39 @@ export const executeProgram = (
   }
 
   if (value) {
-    finalResult.splice(program[3], 1, value);
+    memory.splice(program[3], 1, value);
   }
 
-  return finalResult;
+  return memory;
 };
 
-export const computer = (input: Array<number>): Array<number> => {
+export const computer = (
+  input: Array<number>,
+  noun?: number,
+  verb?: number
+): number => {
+  const increment: number = 4;
   let finalResult: Array<number> = [...input];
-  let opcodePos: number = 0;
+  let instructionPointer: number = 0;
 
-  // "1202 program alarm"
-  finalResult[1] = 12;
-  finalResult[2] = 2;
+  if (noun) {
+    finalResult[1] = noun;
+  }
+  if (verb) {
+    finalResult[2] = verb;
+  }
 
-  for (let index = 0; index < finalResult.length / 4; index++) {
-    const program: Array<number> = finalResult.slice(opcodePos, opcodePos + 4);
+  for (let index = 0; index < finalResult.length / increment; index++) {
+    const program: Array<number> = finalResult.slice(
+      instructionPointer,
+      instructionPointer + increment
+    );
 
     if (!halt) {
       finalResult = executeProgram(program, finalResult);
+      instructionPointer = instructionPointer + increment;
     }
-
-    opcodePos = opcodePos + 4;
   }
 
-  return finalResult;
+  return finalResult[0];
 };
