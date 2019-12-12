@@ -6,7 +6,8 @@
   "scripts": {
     "compile": "tsc ./src/index.ts --outDir ./dist && node -r esm ./dist/index.js",
     "test": "jest --watch",
-    "watch": "nodemon -e ts --exec \"npm run compile\""
+    "lint": "tslint ./src/*.ts",
+    "watch": "nodemon -e ts --exec \"npm run compile\" \"npm run lint\""
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "jest": "^24.9.0",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",
+    "tslint": "^5.20.1",
     "typescript": "^3.7.3"
   }
 }
